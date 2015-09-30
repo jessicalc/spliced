@@ -89,6 +89,8 @@ module.exports = {
       console.log("New player", userName, "Has been added to game:", code);
       console.log("We are making cookies!");
       res.cookie('player', player, { maxAge: 900000, httpOnly: false});
+      res.cookie('playerId', player.user_name, { maxAge: 900000, httpOnly: false});
+      console.log("The player cookie is", player);
       res.cookie(code, true, { maxAge: 900000, httpOnly: false});
       console.log("The cookies are:", res.cookie);
       // once the player has been added, we'll update the game table with the new player's info

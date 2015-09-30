@@ -87,13 +87,12 @@ module.exports = function (app, express) {
   app.post('/game/:gameCode', function(req, res){
     var image = req.body.image;
     var cookieData = req.body.cookieData;
-    var player = req.body.cookieData.player.j;
+    var playerId = cookieData.playerId;
     console.log("inside our post handler, the cookie data is", cookieData);
-    console.log("inside our post handler, the player is", player);
     var gameCode = req.params.gameCode;
     // get the player object out of the cookie 
-
-    var imagePath = path.join(__dirname, '/../assets/drawings/', gameCode + username +'.png');
+    console.log("gameCode + playerId is", gameCode + playerId);
+    var imagePath = path.join(__dirname, '/../assets/drawings/', gameCode + playerId +'.png');
     var imageBuffer = helpers.decodeBase64Image(image);
     //First we create the image so we can use it to create the player.
     // image is created as a base 64 string
@@ -106,7 +105,7 @@ module.exports = function (app, express) {
       } else {
         //db.player.update or insert
         //this finds the user document in the db and either creates it or updates it (if it already exists).
-        db.player.findOneAndUpdate({user_name: username}, {image:imagePath}, {upsert: true, 'new': true}, function (err, player) {
+        db.player.findOneAndUpdate({user_name: playerId}, {image:imagePath}, {upsert: true, 'new': true}, function (err, player) {
           //if game hasn't started. 
           if(!db.started) {
             helpers.createNewGame(player, userKey, username, res);

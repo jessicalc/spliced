@@ -12,7 +12,7 @@ angular.module('spliced.draw', [])
   $scope.data.success = "Success! Your image has been submitted!"
   
   // $scope.data.image = // ng-model for the canvas itself, which we'll save
-
+  debugger;
   $scope.save = function() { 
     var image = document.getElementById("pwCanvasMain").toDataURL();  
     Draw.save(image, $scope.gameCode, $cookies.getAll());
@@ -31,8 +31,5 @@ angular.module('spliced.draw', [])
 
       Draw.registerPlayer($scope.gameCode);
   }
-
-  var player = $cookies.get("player");
-  console.log(player);
 
 });

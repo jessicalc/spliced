@@ -22,12 +22,13 @@ angular.module('spliced.draw', [])
     3: "feet"
   }
 
-
   $scope.save = function() { 
     var image = document.getElementById("pwCanvasMain").toDataURL();  
-    Draw.save(image, $scope.data.gameCode, $cookies.getAll());
+    Draw.save(image, $scope.data.gameCode, $cookies.getAll())
+    .then(function(response) {
+      console.log("Drawing saved!", response)
+    });
     $scope.data.submitted = true;
-    // send the image to the server.
   };
 
   $scope.undo = function() { 

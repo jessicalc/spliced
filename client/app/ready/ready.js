@@ -13,17 +13,14 @@ angular.module('spliced.ready', [])
 
   // this asks the server for info about the game. 
   $scope.getGameStatus = function() {
-    console.log("getting the game status!");
-    Draw.getGameStatus($scope.data.gameCode, function(response) {
-      console.log("The game status response is...", response);
-      // if the game has the property imageURL
+    return Draw.getGameStatus($scope.data.gameCode)
+    .then(function(response) {
+      if (!response.data) { }
       if (response.data.hasOwnProperty("imageURL")) {
-        // then we know that the game is complete, and we set that property to true
         $scope.data.isComplete = true;
-        // and we set the $scope's image URL to the imageURL from the response.
         $scope.data.imageURL = response.data.imageURL;
       } 
-    });
+    })
   }
 
   $scope.registerPlayer = function() {

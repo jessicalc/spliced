@@ -9,27 +9,29 @@ angular.module('spliced.services', [])
     console.log("Inside services, the gameCode is", gameCode);
     console.log("Inside services, the cookieData is", cookieData);
     // write post request here! :)
-    $http.post('/game/' + gameCode, { image: image, cookieData: cookieData } )
+    return $http.post('/game/' + gameCode, { image: image, cookieData: cookieData } )
     .then(function(response) {
+      return response;
       console.log("The response is", response);
     }, function(err) {
       console.log("The error is", err)
     });
   };
 
-  services.createGame = function(callback) {
-    $http.get('/game')
+  services.createGame = function() {
+    return $http.get('/game')
     .then(function (gameCode) {
-      callback(gameCode.data)
+      return gameCode.data;
+      // callback(gameCode.data)
     }, function(err) {
       console.log('There was an error getting the game code.');
     });
   };
 
-  services.registerPlayer = function(gameCode, callback){
+  services.registerPlayer = function(gameCode){
     //POST request:
     console.log("Am I making a request?");
-    $http.get('/game/' + gameCode )
+    return $http.get('/game/' + gameCode )
     .then(function(response){
       var newUrl = '/game/' + gameCode + '/draw';
       $location.path(newUrl);
@@ -40,13 +42,14 @@ angular.module('spliced.services', [])
     }
   };
 
-  services.getGameStatus = function(gameCode, callback) {
+  services.getGameStatus = function(gameCode) {
     console.log("Getting game data...");
 
-    $http.get('/game/' + gameCode + '/status')
+    return $http.get('/game/' + gameCode + '/status')
     .then(function(response){
       console.log("The game data is...", response);
-      callback(response);
+      return response;
+      // callback(response);
     }, function(err){
       console.log("The game doesn't exist", err);
       $location.path('/#')

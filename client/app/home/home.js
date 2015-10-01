@@ -7,7 +7,8 @@ angular.module('spliced.home', [])
   $scope.data.pleaseWaitMessage = 'Looks like your collaborators are still drawing. Check back soon for your final drawing!';
 
   $scope.createGame = function() {
-    Draw.createGame(function(code) {
+    return Draw.createGame()
+    .then(function(code) {
       console.log(code);
       $location.path('/game/' + code);
     });
